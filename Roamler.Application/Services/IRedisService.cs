@@ -4,6 +4,6 @@ namespace Roamler.Application.Services;
 
 public interface IRedisService
 {
-    public bool AddLocation(Location loc);
-    public bool AddLocationRange(List<Location> locs);
+    public Task<bool> AddLocation(Location loc);
+    public Task<bool> AddLocationRange(List<Location> locs);
 }
