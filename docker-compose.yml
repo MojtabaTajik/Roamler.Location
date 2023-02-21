@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  roamler-loc-api:
+    container_name: roamler_loc-api
+    build:
+      context: ./Roamler.API/
+      dockerfile: Dockerfile
+    environment:
+      PUBLISHING_INTERVAL: 5s
+    ports:
+      - "8040:80"
+    restart: unless-stopped
+    healthcheck:
+      test: curl --fail http://roamler-loc-api/health || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3  
+    
+networks:
+  stream_network:
+    name: roamler_network
+    external: true
