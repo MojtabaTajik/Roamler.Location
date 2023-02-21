@@ -1,8 +1,8 @@
 version: '3.7'
 
 services:
-  roamler-loc-api:
-    container_name: roamler_loc-api
+  roamler_loc_api:
+    container_name: roamler_loc_api
     build:
       context: ./Roamler.API/
       dockerfile: Dockerfile
@@ -10,14 +10,40 @@ services:
       PUBLISHING_INTERVAL: 5s
     ports:
       - "8040:80"
-    restart: unless-stopped
+    restart: always
     healthcheck:
-      test: curl --fail http://roamler-loc-api/health || exit 1
+      test: curl --fail http://roamler_loc_api/health || exit 1
       interval: 10s
       timeout: 5s
-      retries: 3  
+      retries: 10
+    depends_on:
+      roamler_loc_db:
+        condition: service_healthy
     
+  roamler_loc_db:
+    image: redis:alpine
+    container_name: roamler_loc_db
+    command: redis-server --appendonly yes
+    ports:
+      - target: 6379
+        published: 6380
+        protocol: tcp
+        mode: host
+    volumes:
+        - redis_data:/data
+    restart: always
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+  
 networks:
   stream_network:
     name: roamler_network
     external: true
+
+volumes:
+    redis_data:
