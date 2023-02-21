@@ -19,10 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Roamler.Application\Roamler.Application.csproj" />
       <ProjectReference Include="..\Roamler.Infrastructure\Roamler.Infrastructure.csproj" />
     </ItemGroup>
