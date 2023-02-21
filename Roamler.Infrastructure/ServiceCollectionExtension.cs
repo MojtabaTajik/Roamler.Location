@@ -1,4 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
+using Roamler.Application.Services;
+using Roamler.Infrastructure.Services;
 using StackExchange.Redis;
 
 namespace Roamler.Infrastructure;
@@ -7,15 +9,14 @@ public static class ServiceCollectionExtension
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddRedis();
+        services.AddSingleton<IRedisService, RedisService>();
+        services.AddRedisConnection();
         return services;
     }
 
-    private static IServiceCollection AddRedis(this IServiceCollection services)
+    private static void AddRedisConnection(this IServiceCollection services)
     {
-        var multiplexer = ConnectionMultiplexer.Connect("localhost");
+        var multiplexer = ConnectionMultiplexer.Connect("localhost:6380");
         services.AddSingleton<IConnectionMultiplexer>(multiplexer);
-
-        return services;
     }
 }
