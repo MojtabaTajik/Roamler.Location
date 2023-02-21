@@ -1,20 +1,14 @@
+using Roamler.API.Configuration;
+using Roamler.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddHealthChecks();
+builder.Services.AddApi();
+builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseAuthorization();
+app.AddSwagger(app.Environment.IsDevelopment());
 app.MapControllers();
 app.UseHealthChecks("/health");
 
