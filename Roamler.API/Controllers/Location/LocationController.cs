@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Roamler.API.Models.ApiResponse;
 using Roamler.Application.CsvFile.Queries.ReadFileToLocation;
 using Roamler.Application.DTO;
 using Roamler.Application.Location.Commands.AddLocation;
@@ -18,16 +19,16 @@ public class LocationController : ControllerBase
     {
         _sender = sender;
     }
-    
+
     [HttpPut("AddLocation")]
     public async Task<IActionResult> AddLocation(LocationWithAddress loc)
     {
         var addLocationCommand = new AddLocationCommand(loc);
-        var addResult = await _sender.Send(addLocationCommand);
-        
-        return Ok(addResult);
+        await _sender.Send(addLocationCommand);
+
+        return Ok();
     }
-    
+
     [HttpPost("AddLocationsFromCsv")]
     public async Task<IActionResult> AddLocationsFromCsvFile(IFormFile csvFile)
     {
@@ -39,21 +40,25 @@ public class LocationController : ControllerBase
         }
 
         var addLocationRangeCommand = new AddLocationRangeCommand(locations.Data);
-        var addResult = await _sender.Send(addLocationRangeCommand);
-        
-        return addResult.IsSuccess
-            ? Ok() 
-            : BadRequest();
+        await _sender.Send(addLocationRangeCommand);
+
+        return Ok();
     }
-    
+
     [HttpGet("GetLocations")]
-    public async Task<IActionResult> SearchNearLocations([FromQuery]Application.DTO.Location location, int maxDistance, int maxResults)
+    public async Task<IActionResult> SearchNearLocations([FromQuery] Application.DTO.Location location, int maxDistance,
+        int maxResults)
     {
         var searchNearLocations = new SearchNearLocationsQuery(location, maxDistance, maxResults);
         var nearLocations = await _sender.Send(searchNearLocations);
 
         return nearLocations.IsSuccess
-            ? Ok(nearLocations)
+            ? Ok(new CustomResponseList<LocationInfo>()
+            {
+                Status = ResponseStatus.Success,
+                Data = nearLocations.Data,
+                Count = nearLocations.Data.Count
+            })
             : NoContent();
     }
 }
