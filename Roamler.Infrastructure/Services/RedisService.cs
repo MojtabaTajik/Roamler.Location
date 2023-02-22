@@ -1,5 +1,5 @@
+using Roamler.Application.DTO;
 using Roamler.Application.Services;
-using Roamler.Domain.Model;
 using StackExchange.Redis;
 
 namespace Roamler.Infrastructure.Services;
@@ -15,7 +15,7 @@ public class RedisService : IRedisService
         _key = new RedisKey("roamler:netherlands");
     }
 
-    public async Task<bool> AddLocation(Location loc)
+    public async Task<bool> AddLocation(LocationWithAddress loc)
     {
         return await _db.GeoAddAsync(
             _key,
@@ -24,16 +24,23 @@ public class RedisService : IRedisService
             new RedisValue(loc.Address));
     }
 
-    public async Task<bool> AddLocationRange(List<Location> locs)
+    public async Task<bool> AddLocationRange(List<LocationWithAddress> locs)
     {
-        Parallel.ForEach(locs, async loc =>
+        foreach (var loc in locs)
         {
-            await _db.GeoAddAsync(
-                _key,
-                loc.Longitude,
-                loc.Latitude,
-                new RedisValue(loc.Address));
-        });
+            try
+            {
+                await _db.GeoAddAsync(
+                    _key,
+                    loc.Longitude,
+                    loc.Latitude,
+                    new RedisValue(loc.Address));
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
 
         return await Task.FromResult(true);
     }
