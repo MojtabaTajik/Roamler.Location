@@ -19,6 +19,6 @@ public class SearchNearLocationQueryHandler : IQueryHandler<SearchNearLocationsQ
         var nearLocations =
             await _locationService.GetNearLocations(request.sourceLoc, request.maxDistance, request.maxResult);
 
-        return Result < List<LocationInfo>>.Success(nearLocations);
+        return Result <List<LocationInfo>>.Success(nearLocations);
     }
 }
