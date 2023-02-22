@@ -5,11 +5,11 @@ using Roamler.Domain.Shared;
 
 namespace Roamler.Application.Location.Queries.SearchNearLocations;
 
-public class SearchLocationQueryHandler : IQueryHandler<SearchNearLocationsQuery, List<LocationInfo>>
+public class SearchNearLocationQueryHandler : IQueryHandler<SearchNearLocationsQuery, List<LocationInfo>>
 {
     private readonly ILocationService _locationService;
 
-    public SearchLocationQueryHandler(ILocationService locationService)
+    public SearchNearLocationQueryHandler(ILocationService locationService)
     {
         _locationService = locationService;
     }
