@@ -1,4 +1,3 @@
-using Roamler.Domain.Model;
 
 namespace Roamler.Application.Services;
 
