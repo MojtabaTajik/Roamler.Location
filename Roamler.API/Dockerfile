@@ -9,6 +9,8 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
 WORKDIR /src
 COPY . .
+
+WORKDIR ./Roamler.API/
 RUN dotnet restore "Roamler.API.csproj"
 RUN dotnet build "Roamler.API.csproj" -c Release -o /app/build
 
