@@ -7,6 +7,6 @@ public static class ServiceCollectionExtension
 {
     public static void AddApplication(this IServiceCollection services)
     {
-        services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddMediatR(r => r.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
     }
 }
