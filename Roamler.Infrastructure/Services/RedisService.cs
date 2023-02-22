@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Roamler.Application.DTO;
 using Roamler.Application.Services;
 using StackExchange.Redis;
@@ -6,17 +7,21 @@ namespace Roamler.Infrastructure.Services;
 
 public class RedisService : IRedisService
 {
+    private readonly ILogger<RedisService> _logger;
     private readonly IDatabase _db;
     private readonly RedisKey _key;
 
-    public RedisService(IConnectionMultiplexer connection)
+    public RedisService(ILogger<RedisService> logger, IConnectionMultiplexer connection)
     {
+        _logger = logger;
         _db = connection.GetDatabase();
         _key = new RedisKey("roamler:netherlands");
     }
 
     public async Task<bool> AddLocation(LocationWithAddress loc)
     {
+        _logger.LogInformation(Consts.addLocationMessage);
+
         return await _db.GeoAddAsync(
             _key,
             loc.Longitude,
@@ -26,6 +31,8 @@ public class RedisService : IRedisService
 
     public async Task<bool> AddLocationRange(List<LocationWithAddress> locs)
     {
+        _logger.LogInformation(Consts.addRangeLocationMessage, locs.Count);
+        
         foreach (var loc in locs)
         {
             try
@@ -38,7 +45,7 @@ public class RedisService : IRedisService
             }
             catch (Exception ex)
             {
-                
+                _logger.LogError(ex.Message);
             }
         }
 
