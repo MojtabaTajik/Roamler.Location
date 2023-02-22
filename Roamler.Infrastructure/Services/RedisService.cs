@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Roamler.Application.DTO;
 using Roamler.Application.Services;
@@ -56,7 +57,9 @@ public class RedisService : ILocationService
     {
         var searchCircleInfo = new GeoSearchCircle(maxDistance, GeoUnit.Meters);
         var resultParams = GeoRadiusOptions.WithCoordinates | GeoRadiusOptions.WithDistance;
-        
+
+        var sw = new Stopwatch();
+        sw.Start();
         var nearLocations = await _db.GeoSearchAsync(_key, 
             sourceLoc.Longitude, 
             sourceLoc.Latitude,
@@ -66,6 +69,9 @@ public class RedisService : ILocationService
             Order.Ascending,
             resultParams);
 
+        sw.Stop();
+        _logger.LogInformation(Consts.searchLocationDuration, sourceLoc, maxDistance, sw.Elapsed, nearLocations.Length);
+        
         return nearLocations
             .Select(s => new LocationInfo(s.Position.Value.Latitude,
                 s.Position.Value.Longitude,
