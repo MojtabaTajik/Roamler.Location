@@ -4,6 +4,7 @@ using Roamler.Application.CsvFile.Queries.ReadFileToLocation;
 using Roamler.Application.DTO;
 using Roamler.Application.Location.Commands.AddLocation;
 using Roamler.Application.Location.Commands.AddLocationRange;
+using Roamler.Application.Location.Queries.SearchNearLocations;
 
 namespace Roamler.API.Controllers.Location;
 
@@ -43,5 +44,16 @@ public class LocationController : ControllerBase
         return addResult.IsSuccess
             ? Ok() 
             : BadRequest();
+    }
+    
+    [HttpGet("GetLocations")]
+    public async Task<IActionResult> SearchNearLocations([FromQuery]Application.DTO.Location location, int maxDistance, int maxResults)
+    {
+        var searchNearLocations = new SearchNearLocationsQuery(location, maxDistance, maxResults);
+        var nearLocations = await _sender.Send(searchNearLocations);
+
+        return nearLocations.IsSuccess
+            ? Ok(nearLocations)
+            : NoContent();
     }
 }
