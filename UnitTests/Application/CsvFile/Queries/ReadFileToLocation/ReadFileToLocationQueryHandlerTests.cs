@@ -42,4 +42,21 @@ public class ReadFileToLocationQueryHandlerTests
         result.Data.Should().NotBeEmpty();
         result.Data.Should().Equal(expectedLocation);
     }
+    
+    [Fact]
+    public async Task read_broken_file_should_fail()
+    {
+        // Arrange
+        var csvString = $"Invalid_CSV_Data";
+        var csvStream = new MemoryStream(Encoding.UTF8.GetBytes(csvString)); 
+        var query = new ReadFileToLocationQuery(csvStream);
+
+        // Act
+        var exception = await Record.ExceptionAsync(() =>
+                _handler.Handle(query, CancellationToken.None)
+        );
+        
+        // Assert
+        Assert.IsType<InvalidCsvFileException>(exception);
+    }
 }
