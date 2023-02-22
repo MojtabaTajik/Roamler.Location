@@ -33,12 +33,15 @@ public class RedisService : ILocationService
     public async Task<bool> AddLocationRange(List<LocationWithAddress> locs)
     {
         _logger.LogInformation(Consts.addRangeLocationMessage, locs.Count);
-        
+
+        var sw = new Stopwatch();
+        sw.Start();
+
         foreach (var loc in locs)
         {
             try
             {
-                await _db.GeoAddAsync(
+                _db.GeoAdd(
                     _key,
                     loc.Longitude,
                     loc.Latitude,
@@ -49,6 +52,10 @@ public class RedisService : ILocationService
                 _logger.LogError(ex.Message);
             }
         }
+
+        sw.Stop();
+        _logger.LogInformation(Consts.addRangeLocationDuration, locs.Count, sw.Elapsed);
+
 
         return await Task.FromResult(true);
     }
