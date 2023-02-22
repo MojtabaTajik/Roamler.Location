@@ -14,4 +14,4 @@ app.AddSwagger(app.Environment.IsDevelopment());
 app.MapControllers();
 app.UseHealthChecks("/health");
 
-app.Run();
+await app.RunAsync(app.Lifetime.ApplicationStopped);
