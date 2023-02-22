@@ -13,12 +13,15 @@ public class ReadFileToLocationQueryHandler : IQueryHandler<ReadFileToLocationQu
     {
         _csvReaderService = csvReaderService;
     }
-    
-    public async Task<Result<List<LocationWithAddress>>> Handle(ReadFileToLocationQuery request, CancellationToken cancellationToken)
+
+    public async Task<Result<List<LocationWithAddress>>> Handle(ReadFileToLocationQuery request,
+        CancellationToken cancellationToken)
     {
         var locations = await _csvReaderService
             .ReadCsvToObjects<LocationWithAddress>(request.csvStream);
-        
-        return Result<List<LocationWithAddress>>.Success(locations);
+
+        return locations == null
+            ? Result<List<LocationWithAddress>>.Failed()
+            : Result<List<LocationWithAddress>>.Success(locations);
     }
 }
