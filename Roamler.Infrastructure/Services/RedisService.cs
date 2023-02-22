@@ -44,4 +44,26 @@ public class RedisService : IRedisService
 
         return await Task.FromResult(true);
     }
+
+    public async Task<List<LocationInfo>> GetNearLocations(Location sourceLoc, int maxDistance, int maxResult)
+    {
+        var searchCircleInfo = new GeoSearchCircle(maxDistance, GeoUnit.Meters);
+        var resultParams = GeoRadiusOptions.WithCoordinates | GeoRadiusOptions.WithDistance;
+        
+        var nearLocations = await _db.GeoSearchAsync(_key, 
+            sourceLoc.Longitude, 
+            sourceLoc.Latitude,
+            searchCircleInfo,
+            maxResult,
+            true,
+            Order.Ascending,
+            resultParams);
+
+        return nearLocations
+            .Select(s => new LocationInfo(s.Position.Value.Latitude,
+                s.Position.Value.Longitude,
+                s.Member,
+                s.Distance.Value))
+            .ToList();
+    }
 }
