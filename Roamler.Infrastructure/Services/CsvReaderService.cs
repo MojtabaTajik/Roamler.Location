@@ -3,6 +3,7 @@ using System.Text;
 using CsvHelper;
 using Microsoft.Extensions.Logging;
 using Roamler.Application.Services;
+using Roamler.Infrastructure.Exceptions;
 
 namespace Roamler.Infrastructure.Services;
 
@@ -14,7 +15,7 @@ public class CsvReaderService : ICsvReaderService
     {
         _logger = logger;
     }
-    
+
     public async Task<List<T>> ReadCsvToObjects<T>(Stream fileContent)
     {
         try
@@ -26,10 +27,9 @@ public class CsvReaderService : ICsvReaderService
                 .GetRecordsAsync<T>()
                 .ToListAsync();
         }
-        catch (Exception ex)
+        catch (CsvHelperException)
         {
-            _logger.LogError(ex.Message);
-            return null;
+            throw new InvalidCsvFileException();
         }
     }
 }
