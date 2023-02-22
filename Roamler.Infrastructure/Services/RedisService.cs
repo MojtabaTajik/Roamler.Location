@@ -5,7 +5,7 @@ using StackExchange.Redis;
 
 namespace Roamler.Infrastructure.Services;
 
-public class RedisService : IRedisService
+public class RedisService : ILocationService
 {
     private readonly ILogger<RedisService> _logger;
     private readonly IDatabase _db;

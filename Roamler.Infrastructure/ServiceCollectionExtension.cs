@@ -9,7 +9,7 @@ public static class ServiceCollectionExtension
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddSingleton<IRedisService, RedisService>();
+        services.AddSingleton<ILocationService, RedisService>();
         services.AddTransient<ICsvReaderService, CsvReaderService>();
         services.AddRedisConnection();
         return services;
