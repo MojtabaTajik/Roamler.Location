@@ -7,7 +7,8 @@
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5110",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "RoamlerGeoRedisDB": "localhost:6380"
       }
     }
   }

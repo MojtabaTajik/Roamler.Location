@@ -4,10 +4,11 @@ services:
   roamler_loc_api:
     container_name: roamler_loc_api
     build:
-      context: ./Roamler.API/
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./Roamler.API/Dockerfile
     environment:
       PUBLISHING_INTERVAL: 5s
+      RoamlerGeoRedisDB: "roamler_loc_db:6379"
     ports:
       - "8040:80"
     restart: always

@@ -16,7 +16,15 @@ public static class ServiceCollectionExtension
 
     private static void AddRedisConnection(this IServiceCollection services)
     {
-        var multiplexer = ConnectionMultiplexer.Connect("localhost:6380");
+        var redisConnection = Environment.GetEnvironmentVariable("RoamlerGeoRedisDB");
+        
+        var option = new ConfigurationOptions
+        {
+            AbortOnConnectFail = false,
+            EndPoints = { redisConnection }
+        };
+        
+        var multiplexer = ConnectionMultiplexer.Connect(option);
         services.AddSingleton<IConnectionMultiplexer>(multiplexer);
     }
 }
