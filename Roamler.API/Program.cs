@@ -15,3 +15,5 @@ app.MapControllers();
 app.UseHealthChecks("/health");
 
 await app.RunAsync(app.Lifetime.ApplicationStopped);
+
+public partial class Program { }
