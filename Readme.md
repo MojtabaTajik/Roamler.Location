@@ -64,6 +64,12 @@ Now, the project is ready to use, just browse below URL using your browser:
 
     http://localhost:8040/swagger/index.html
 
+## 🧪&nbsp; Test
+To test the project upload Location.csv using **AddLocationsFromCsv** endpoint, this API read and parse CSV file and store it in Redis DB as GEO locations.
+
+After that you can use **GetLocations** endpoint to search for near locations of your own location.
+
+
 ## 📫&nbsp; Have a question? Ran into a problem?
 
 Feel free to reach me at [Mojtaba Tajik](mailto:mojtabatajik@hotmail.com).
