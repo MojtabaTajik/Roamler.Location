@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roamler.API", "Roamler.API\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roamler.Application", "Roamler.Application\Roamler.Application.csproj", "{C8299FB0-81C5-4560-AB0B-3835B081DB49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roamler.Common", "Roamler.Common\Roamler.Common.csproj", "{DB30874C-5BCF-4B95-AB1D-A9F795CEE775}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roamler.Infrastructure", "Roamler.Infrastructure\Roamler.Infrastructure.csproj", "{23461D3D-DE7B-4521-A9AC-C6A6ECFF3B62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roamler.Domain", "Roamler.Domain\Roamler.Domain.csproj", "{0260A0E7-BAE0-430E-B31C-D808A784D2BF}"
@@ -30,10 +28,6 @@ Global
 		{C8299FB0-81C5-4560-AB0B-3835B081DB49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8299FB0-81C5-4560-AB0B-3835B081DB49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8299FB0-81C5-4560-AB0B-3835B081DB49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB30874C-5BCF-4B95-AB1D-A9F795CEE775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB30874C-5BCF-4B95-AB1D-A9F795CEE775}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB30874C-5BCF-4B95-AB1D-A9F795CEE775}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB30874C-5BCF-4B95-AB1D-A9F795CEE775}.Release|Any CPU.Build.0 = Release|Any CPU
 		{23461D3D-DE7B-4521-A9AC-C6A6ECFF3B62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{23461D3D-DE7B-4521-A9AC-C6A6ECFF3B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23461D3D-DE7B-4521-A9AC-C6A6ECFF3B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
