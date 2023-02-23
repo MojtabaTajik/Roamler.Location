@@ -33,8 +33,9 @@
 This API let the client add location(s) to configured store and search for locatipns near the given location.
 
 ## 📖&nbsp; Architecture
-The project developed based on Clean Architecture and has four layers:
-  * **API** Entrypoint of the project, endpoint exposer, Swageer config and DI registration
+The project developed based on Clean Architecture and has four layers: 
+  
+  * **API** entry point of the project, endpoint exposure, Swagger config and DI registration
   * **Application** The whole logic of the program following CQRS model
   * **Domain** The domain models
   * **Infrastructure** Services which communicating with external API/Tools/Files
@@ -49,7 +50,7 @@ To run the project use terminal and go to project directory whoch docker-compose
     cd ~/Roamler.Location/src/
     docker compose up -d
 
-All required resources and dependencies automatically handled by Docker scripts and after the command runned successfully you can verify project is running using below command:
+Docker scripts automatically handle all required resources and dependencies, and after the command runs successfully, you can verify the project is running using the below command:
 
     docker ps
 
