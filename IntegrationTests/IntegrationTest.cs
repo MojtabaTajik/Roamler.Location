@@ -29,4 +29,20 @@ public class IntegrationTest : IClassFixture<WebApplicationFactory<Program>>
         // Assert
         response.EnsureSuccessStatusCode();
     }
+
+    [Fact]
+    public async Task Should_return_success_on_add_location()
+    {
+        const string endpoint = "/Location/AddLocation";
+        
+        // Arrange
+        var loc = new LocationWithAddress(37,15.3, "Roamler HQ");
+
+        // Act
+        var response = await _client.PutAsJsonAsync(endpoint, loc);
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+    }
+
 }
