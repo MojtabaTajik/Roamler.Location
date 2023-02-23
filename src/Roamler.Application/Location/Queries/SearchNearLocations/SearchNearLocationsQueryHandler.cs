@@ -19,7 +19,7 @@ public class SearchNearLocationQueryHandler : IQueryHandler<SearchNearLocationsQ
     
     public async Task<Result<List<LocationInfo>>> Handle(SearchNearLocationsQuery request, CancellationToken cancellationToken)
     {
-        var cacheKey = request.sourceLoc.ToString();
+        var cacheKey = $"{request.sourceLoc}_{request.maxDistance}_{request.maxResult}";
         
         var keyExists = await _cachingProvider.ExistsAsync(cacheKey, cancellationToken);
         if (keyExists)
