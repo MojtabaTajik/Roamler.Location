@@ -1,7 +1,9 @@
 using System.Diagnostics;
+using System.Security.AccessControl;
 using Microsoft.Extensions.Logging;
 using Roamler.Application.DTO;
 using Roamler.Application.Services;
+using Roamler.Infrastructure.Exceptions;
 using StackExchange.Redis;
 
 namespace Roamler.Infrastructure.Services;
