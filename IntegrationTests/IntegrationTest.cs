@@ -102,4 +102,23 @@ public class IntegrationTest : IClassFixture<WebApplicationFactory<Program>>
         // Assert
         response.StatusCode.Should().NotBe(HttpStatusCode.OK);
     }
+    
+    [Fact]
+    public async Task Should_return_success_on_get_near_locations()
+    {
+        const string endpoint = "/Location/GetLocations?";
+        
+        // Arrange
+        var query = HttpUtility.ParseQueryString(string.Empty);
+        query["Latitude"] = "37";
+        query["Longitude"] = "15.3";
+        query["maxDistance"] = "100";
+        query["maxResults"] = "10";
+
+        // Act
+        var response = await _client.GetAsync(string.Concat(endpoint, query));
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+    }
 }
