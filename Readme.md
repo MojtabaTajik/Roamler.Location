@@ -16,7 +16,7 @@
         <img src="https://img.shields.io/github/commit-activity/w/MojtabaTajik/Roamler.Location">
     </br>
     </a>
-        <a href="docker.com/" target="_blank">
+        <a href="https://docker.com/" target="_blank">
         <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
     </a>
     </a>
@@ -65,7 +65,7 @@ Now, the project is ready to use, just browse below URL using your browser:
     http://localhost:8040/swagger/index.html
 
 ## 🧪&nbsp; Test
-To test the project upload Location.csv using **AddLocationsFromCsv** endpoint, this API read and parse CSV file and store it in Redis DB as GEO locations.
+To test the project upload **Location.csv** file using **AddLocationsFromCsv** endpoint, this API read, parse and store CSV file to Redis DB as GEO locations.
 
 After that you can use **GetLocations** endpoint to search for near locations of your own location.
 
