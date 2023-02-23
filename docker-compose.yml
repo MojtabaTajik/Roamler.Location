@@ -40,6 +40,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 6
+
+  roamler_test_db:
+    image: redis:alpine
+    container_name: roamler_test_db
+    command: redis-server --appendonly yes
+    ports:
+      - target: 6379
+        published: 6381
+        protocol: tcp
+        mode: host
+    restart: always
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 6
   
 networks:
   stream_network:
