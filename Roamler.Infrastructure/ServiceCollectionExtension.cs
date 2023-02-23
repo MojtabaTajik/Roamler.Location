@@ -11,6 +11,7 @@ public static class ServiceCollectionExtension
     {
         services.AddSingleton<ILocationService, RedisService>();
         services.AddTransient<ICsvReaderService, CsvReaderService>();
+        services.AddEasyCaching(opt => opt.UseInMemory());
         services.AddRedisConnection();
     }
 

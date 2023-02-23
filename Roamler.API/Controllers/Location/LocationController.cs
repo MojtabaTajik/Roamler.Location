@@ -57,7 +57,8 @@ public class LocationController : ControllerBase
             {
                 Status = ResponseStatus.Success,
                 Data = nearLocations.Data,
-                Count = nearLocations.Data.Count
+                Count = nearLocations.Data.Count,
+                Message = nearLocations.IsCached ? "Cached" : string.Empty
             })
             : NoContent();
     }
