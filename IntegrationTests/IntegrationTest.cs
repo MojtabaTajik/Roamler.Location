@@ -44,5 +44,62 @@ public class IntegrationTest : IClassFixture<WebApplicationFactory<Program>>
         // Assert
         response.EnsureSuccessStatusCode();
     }
+    
+    [Fact]
+    public async Task Should_return_success_on_valid_csv_file()
+    {
+        const string endpoint = "/Location/AddLocationsFromCsv";
+        
+        // Arrange
+        var locs = new StringBuilder(10);
+        locs.Append("Latitude,Longitude,Address");
+        for (int i = 0; i <= 10; i++)
+        {
+            locs.AppendLine();
+            locs.Append($"{20},{10},Roamler HQ");
+        }
 
+        var stringBytes = Encoding.UTF8.GetBytes(locs.ToString());
+        var byteArrayContent = new ByteArrayContent(stringBytes);
+        byteArrayContent.Headers.Remove("Content-Type");
+        byteArrayContent.Headers.Add("Content-Type", "multipart/form-data");
+
+        var content = new MultipartFormDataContent();
+        content.Add(byteArrayContent, "csvFile", "Sample.csv");
+
+        // Act
+        var response = await _client.PostAsync(endpoint, content);
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+    }
+    
+    [Fact]
+    public async Task Should_return_fail_on_invalid_csv_file()
+    {
+        const string endpoint = "/Location/AddLocationsFromCsv";
+        
+        // Arrange
+        var locs = new StringBuilder(10);
+        locs.Append("Latitude,Longitude");
+        for (int i = 0; i <= 10; i++)
+        {
+            locs.AppendLine();
+            locs.Append($"{20},{10},Roamler HQ");
+        }
+
+        var stringBytes = Encoding.UTF8.GetBytes(locs.ToString());
+        var byteArrayContent = new ByteArrayContent(stringBytes);
+        byteArrayContent.Headers.Remove("Content-Type");
+        byteArrayContent.Headers.Add("Content-Type", "multipart/form-data");
+
+        var content = new MultipartFormDataContent();
+        content.Add(byteArrayContent, "csvFile", "Sample.csv");
+
+        // Act
+        var response = await _client.PostAsync(endpoint, content);
+
+        // Assert
+        response.StatusCode.Should().NotBe(HttpStatusCode.OK);
+    }
 }
